@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>3EDAD6FF</accent>
+        <selectionAccent>2D9E9CFF</selectionAccent>
+        <accentInk>000000FF</accentInk>
+        <accentWash>D7F3F2FF</accentWash>
+        <manufacturer>Watara</manufacturer>
+        <hardwareYear>1992</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/supervision.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/supervision.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/supervision.png</systemHero>
+    </variables>
+</theme>

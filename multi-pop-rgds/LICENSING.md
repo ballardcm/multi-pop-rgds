@@ -12,6 +12,8 @@ For covered material, credit **Multi Pop by ballardcm**, link to <https://github
 
 The theme was developed with the help of AI, and its original system illustrations were AI-generated. Applying this license does not assert that every file is copyrightable, create copyright in purely AI-generated material, or restrict material or uses for which permission is not required under applicable law. The attribution, NonCommercial, and ShareAlike conditions apply only when exercising rights covered by the license. Credit to Multi Pop is appreciated even where attribution is not legally required.
 
+[DekosAnjo](https://github.com/DekosAnjo) contributed the additional systems in [PR #9](https://github.com/ballardcm/multi-pop-rgds/pull/9): Channel F, Odyssey², Famicom Disk System, MSX2, Mega CD, Super Cassette Vision, Mega Duck, Nintendo 64DD, Pokémon Mini, Doom, TIC-80, WASM-4, and Watara Supervision. DekosAnjo reported generating their system illustrations with **Nano Banana 2**; the corresponding cards and hero panels derive from those illustrations. These contributions retain the project’s CC BY-NC-SA 4.0 scope where applicable. The SVG logos retain their separate upstream credits and terms. AI assistance (Codex) was used for review fixes and integration.
+
 ## Existing licenses and exclusions
 
 The following paths are relative to this installable theme folder:

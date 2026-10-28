@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>161313FF</accent>
+        <selectionAccent>161313FF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>CFCFCFFF</accentWash>
+        <manufacturer>MSX</manufacturer>
+        <hardwareYear>1985</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/msx.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/logos/platforms/msx2.svg</platformLogo>
+        <platformLogoVisible>true</platformLogoVisible>
+        <platformTextVisible>false</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/msx2.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/msx2.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/msx2.png</systemHero>
+    </variables>
+</theme>

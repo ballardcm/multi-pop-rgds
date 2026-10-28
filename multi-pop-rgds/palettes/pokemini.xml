@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>5F1A82FF</accent>
+        <selectionAccent>5F1A82FF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>DCD0E3FF</accentWash>
+        <manufacturer>Nintendo</manufacturer>
+        <hardwareYear>2001</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/nintendo.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/pokemini.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/pokemini.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/pokemini.png</systemHero>
+    </variables>
+</theme>

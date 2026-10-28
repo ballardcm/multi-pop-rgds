@@ -2,6 +2,8 @@
 
 > **AI disclosure:** This theme was developed with the help of AI, and its original system illustrations were AI-generated. Third-party components and their credits are listed below.
 
+[DekosAnjo](https://github.com/DekosAnjo) contributed the additional systems in [PR #9](https://github.com/ballardcm/multi-pop-rgds/pull/9): Channel F, Odyssey², Famicom Disk System, MSX2, Mega CD, Super Cassette Vision, Mega Duck, Nintendo 64DD, Pokémon Mini, Doom, TIC-80, WASM-4, and Watara Supervision. DekosAnjo reported generating their system illustrations with **Nano Banana 2**; the corresponding cards and hero panels derive from those illustrations. These contributions retain the project’s CC BY-NC-SA 4.0 scope where applicable. The SVG logos retain their separate upstream credits and terms. AI assistance (Codex) was used for review fixes and integration.
+
 For Anbernic RG DS with ROCKNIX 20261001. This is the installable theme folder, including the patched frontend.
 
 Read the complete [install, update, removal and recovery instructions](https://github.com/ballardcm/multi-pop-rgds#install) before activating. Copy this folder to `/roms/themes/`, keep SSH enabled, then run:

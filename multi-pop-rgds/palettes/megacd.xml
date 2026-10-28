@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>7D89C4FF</accent>
+        <selectionAccent>7D89C4FF</selectionAccent>
+        <accentInk>000000FF</accentInk>
+        <accentWash>E2E4EFFF</accentWash>
+        <manufacturer>Sega</manufacturer>
+        <hardwareYear>1992</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/sega.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/megacd.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/megacd.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/megacd.png</systemHero>
+    </variables>
+</theme>

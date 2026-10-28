@@ -97,6 +97,19 @@
   <include if="${system.theme} == 'wonderswan'">./palettes/wonderswan.xml</include>
   <include if="${system.theme} == 'tg16'">./palettes/tg16.xml</include>
   <include if="${system.theme} == 'tg-cd'">./palettes/tg-cd.xml</include>
+  <include if="${system.theme} == 'channelf'">./palettes/channelf.xml</include>
+  <include if="${system.theme} == 'odyssey2'">./palettes/odyssey.xml</include>
+  <include if="${system.theme} == 'fds'">./palettes/fds.xml</include>
+  <include if="${system.theme} == 'msx2'">./palettes/msx2.xml</include>
+  <include if="${system.theme} == 'megacd'">./palettes/megacd.xml</include>
+  <include if="${system.theme} == 'supervision'">./palettes/supervision.xml</include>
+  <include if="${system.theme} == 'scv'">./palettes/scv.xml</include>
+  <include if="${system.theme} == 'megaduck'">./palettes/megaduck.xml</include>
+  <include if="${system.theme} == 'n64dd'">./palettes/n64dd.xml</include>
+  <include if="${system.theme} == 'pokemini'">./palettes/pokemini.xml</include>
+  <include if="${system.theme} == 'doom'">./palettes/doom.xml</include>
+  <include if="${system.theme} == 'tic80'">./palettes/tic-80.xml</include>
+  <include if="${system.theme} == 'wasm4'">./palettes/wasm4.xml</include>
   <include>./layouts/common.xml</include>
   <include>./layouts/system.xml</include>
   <include>./layouts/games.xml</include>

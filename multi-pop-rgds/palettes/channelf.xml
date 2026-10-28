@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>A36834FF</accent>
+        <selectionAccent>A36834FF</selectionAccent>
+        <accentInk>000000FF</accentInk>
+        <accentWash>E9DED5FF</accentWash>
+        <manufacturer>Fairchild</manufacturer>
+        <hardwareYear>1976</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/fairchild.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/logos/platforms/channelf.svg</platformLogo>
+        <platformLogoVisible>true</platformLogoVisible>
+        <platformTextVisible>false</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/channelf.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/channelf.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/channelf.png</systemHero>
+    </variables>
+</theme>

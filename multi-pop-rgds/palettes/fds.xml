@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>99132EFF</accent>
+        <selectionAccent>99132EFF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>E7CFD4FF</accentWash>
+        <manufacturer>Nintendo</manufacturer>
+        <hardwareYear>1986</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/nintendo.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/logos/platforms/fds.svg</platformLogo>
+        <platformLogoVisible>true</platformLogoVisible>
+        <platformTextVisible>false</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/fds.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/fds.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/fds.png</systemHero>
+    </variables>
+</theme>

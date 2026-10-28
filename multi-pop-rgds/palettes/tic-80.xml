@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>275F7CFF</accent>
+        <selectionAccent>275F7CFF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>D2DCE2FF</accentWash>
+        <manufacturer>Nesbox</manufacturer>
+        <hardwareYear>2017</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/logos/platforms/tic-80.svg</platformLogo>
+        <platformLogoVisible>true</platformLogoVisible>
+        <platformTextVisible>false</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/tic-80.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/tic-80.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/tic-80.png</systemHero>
+    </variables>
+</theme>

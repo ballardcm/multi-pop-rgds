@@ -401,6 +401,84 @@
     "year": "1989",
     "accent": "707A9E"
   },
+  "channelf": {
+    "title": "Channel F",
+    "manufacturer": "Fairchild",
+    "year": "1976",
+    "accent": "A36834"
+  },
+  "odyssey": {
+    "title": "Odyssey\u00b2",
+    "manufacturer": "Magnavox",
+    "year": "1978",
+    "accent": "605f5A"
+  },
+  "fds": {
+    "title": "Famicom Disk System",
+    "manufacturer": "Nintendo",
+    "year": "1986",
+    "accent": "99132E"
+  },
+  "msx2": {
+    "title": "MSX2",
+    "manufacturer": "MSX",
+    "year": "1985",
+    "accent": "161313"
+  },
+  "megacd": {
+    "title": "Mega CD",
+    "manufacturer": "Sega",
+    "year": "1992",
+    "accent": "7D89C4"
+  },
+  "scv": {
+    "title": "Super Cassette Vision",
+    "manufacturer": "Epoch",
+    "year": "1984",
+    "accent": "BB731B"
+  },
+  "megaduck": {
+    "title": "Mega Duck",
+    "manufacturer": "Welback",
+    "year": "1993",
+    "accent": "159097"
+  },
+  "n64dd": {
+    "title": "Nintendo 64 DD",
+    "manufacturer": "Nintendo",
+    "year": "1999",
+    "accent": "1A826B"
+  },
+  "pokemini": {
+    "title": "Pok\u00e9mon Mini",
+    "manufacturer": "Nintendo",
+    "year": "2001",
+    "accent": "5F1A82"
+  },
+  "doom": {
+    "title": "Doom",
+    "manufacturer": "ID",
+    "year": "1993",
+    "accent": "1C380A"
+  },
+  "tic-80": {
+    "title": "TIC-80",
+    "manufacturer": "Nesbox",
+    "year": "2017",
+    "accent": "275F7C"
+  },
+  "wasm4": {
+    "title": "WASM-4",
+    "manufacturer": "Bruno Garcia",
+    "year": "2021",
+    "accent": "06540F"
+  },
+  "supervision": {
+    "title": "Supervision",
+    "manufacturer": "Watara",
+    "year": "1992",
+    "accent": "3EDAD6"
+  },
   "default": {
     "title": "Game Library",
     "manufacturer": "Multi Pop",

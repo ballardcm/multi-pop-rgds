@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>1C380AFF</accent>
+        <selectionAccent>1C380AFF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>D0D5CDFF</accentWash>
+        <manufacturer>ID</manufacturer>
+        <hardwareYear>1993</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/doom.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/doom.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/doom.png</systemHero>
+    </variables>
+</theme>

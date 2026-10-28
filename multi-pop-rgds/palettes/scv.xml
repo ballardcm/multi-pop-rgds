@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>BB731BFF</accent>
+        <selectionAccent>BB731BFF</selectionAccent>
+        <accentInk>000000FF</accentInk>
+        <accentWash>EDE0D0FF</accentWash>
+        <manufacturer>Epoch</manufacturer>
+        <hardwareYear>1984</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/scv.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/scv.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/scv.png</systemHero>
+    </variables>
+</theme>

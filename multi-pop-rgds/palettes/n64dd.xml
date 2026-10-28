@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>1A826BFF</accent>
+        <selectionAccent>1A826BFF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>D0E3DFFF</accentWash>
+        <manufacturer>Nintendo</manufacturer>
+        <hardwareYear>1999</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/logos/manufacturers/nintendo.svg</manufacturerLogo>
+        <manufacturerLogoVisible>true</manufacturerLogoVisible>
+        <manufacturerTextVisible>false</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/n64dd.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/n64dd.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/n64dd.png</systemHero>
+    </variables>
+</theme>

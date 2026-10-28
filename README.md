@@ -2,6 +2,8 @@
 
 > **AI disclosure:** This theme was developed with the help of AI, and its original system illustrations were AI-generated. Third-party components and their credits are listed below.
 
+[DekosAnjo](https://github.com/DekosAnjo) contributed the additional systems in [PR #9](https://github.com/ballardcm/multi-pop-rgds/pull/9): Channel F, Odyssey², Famicom Disk System, MSX2, Mega CD, Super Cassette Vision, Mega Duck, Nintendo 64DD, Pokémon Mini, Doom, TIC-80, WASM-4, and Watara Supervision. DekosAnjo reported generating their system illustrations with **Nano Banana 2**; the corresponding cards and hero panels derive from those illustrations. These contributions retain the project’s CC BY-NC-SA 4.0 scope where applicable. The SVG logos retain their separate upstream credits and terms. AI assistance (Codex) was used for review fixes and integration.
+
 A colorful two-screen frontend for **Anbernic RG DS running ROCKNIX 20261001**. System artwork or a game preview appears above; a three-card library appears below. Touch works on both screens. This port of [Multi Pop Thor](https://github.com/ballardcm/multi-pop-thor) includes a patched EmulationStation frontend sized for the RG DS's two 640×480 displays.
 
 This is an early release for the original RG DS, not the RG DS Plus or other handhelds. It installs on the ROCKNIX card and does not replace Android or change your ROMs, BIOS, saves, or emulator configuration. See [hardware validation](docs/prototype-status.md) for tested behavior and outstanding checks.

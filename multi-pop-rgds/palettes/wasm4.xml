@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>06540FFF</accent>
+        <selectionAccent>06540FFF</selectionAccent>
+        <accentInk>FFFFFFFF</accentInk>
+        <accentWash>CCDACEFF</accentWash>
+        <manufacturer>Bruno Garcia</manufacturer>
+        <hardwareYear>2021</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/ui/white.svg</platformLogo>
+        <platformLogoVisible>false</platformLogoVisible>
+        <platformTextVisible>true</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/wasm4.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/wasm4.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/wasm4.png</systemHero>
+    </variables>
+</theme>

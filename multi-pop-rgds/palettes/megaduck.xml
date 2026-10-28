@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+    <formatVersion>7</formatVersion>
+    <variables>
+        <accent>159097FF</accent>
+        <selectionAccent>159097FF</selectionAccent>
+        <accentInk>000000FF</accentInk>
+        <accentWash>CFE5E7FF</accentWash>
+        <manufacturer>Welback</manufacturer>
+        <hardwareYear>1993</hardwareYear>
+        <manufacturerLogo>${themePath}/assets/ui/white.svg</manufacturerLogo>
+        <manufacturerLogoVisible>false</manufacturerLogoVisible>
+        <manufacturerTextVisible>true</manufacturerTextVisible>
+        <platformLogo>${themePath}/assets/logos/platforms/megaduck.svg</platformLogo>
+        <platformLogoVisible>true</platformLogoVisible>
+        <platformTextVisible>false</platformTextVisible>
+        <systemIcon>${themePath}/assets/systems/megaduck.png</systemIcon>
+        <systemCard>${themePath}/assets/cards/megaduck.png</systemCard>
+        <systemHero>${themePath}/assets/heroes/megaduck.png</systemHero>
+    </variables>
+</theme>

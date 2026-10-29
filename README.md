@@ -9,8 +9,6 @@
 
 > **AI disclosure:** This theme was developed with the help of AI, and its original system illustrations were AI-generated. Third-party components and their credits are listed below.
 
-[DekosAnjo](https://github.com/DekosAnjo) contributed the additional systems in [PR #9](https://github.com/ballardcm/multi-pop-rgds/pull/9): Channel F, Odyssey², Famicom Disk System, MSX2, Mega CD, Super Cassette Vision, Mega Duck, Nintendo 64DD, Pokémon Mini, Doom, TIC-80, WASM-4, and Watara Supervision. DekosAnjo reported generating their system illustrations with **Nano Banana 2**; the corresponding cards and hero panels derive from those illustrations. These contributions retain the project’s CC BY-NC-SA 4.0 scope where applicable. The SVG logos retain their separate upstream credits and terms. AI assistance (Codex) was used for review fixes and integration.
-
 A colorful two-screen frontend for **Anbernic RG DS running ROCKNIX 20261001**. System artwork or a game preview appears above; a three-card library appears below. Touch works on both screens. This port of Multi Pop Thor, now under [`systems/thor`](https://github.com/ballardcm/multi-pop/tree/HEAD/systems/thor) in the same repository, includes a patched EmulationStation frontend sized for the RG DS's two 640×480 displays.
 
 This is an early release for the original RG DS, not the RG DS Plus or other handhelds. It installs on the ROCKNIX card and does not replace Android or change your ROMs, BIOS, saves, or emulator configuration. See [hardware validation](docs/prototype-status.md) for tested behavior and outstanding checks.
@@ -187,6 +185,8 @@ rm -rf /storage/.config/multi-pop-rgds
 SSH still works when the frontend is black. Download and verify the installable ZIP, then copy `multi-pop-rgds/` back to `/roms/themes/` as in step 3. **Do not run enable again.** Run the restore command above, confirm it succeeds, and then finish the removal steps. Keep the recovery records until the stock frontend works.
 
 ## Development and license
+
+[DekosAnjo](https://github.com/DekosAnjo) contributed the additional systems in [PR #9](https://github.com/ballardcm/multi-pop-rgds/pull/9): Channel F, Odyssey², Famicom Disk System, MSX2, Mega CD, Super Cassette Vision, Mega Duck, Nintendo 64DD, Pokémon Mini, Doom, TIC-80, WASM-4, and Watara Supervision. DekosAnjo reported generating their system illustrations with **Nano Banana 2**; the corresponding cards and hero panels derive from those illustrations. These contributions retain the project’s CC BY-NC-SA 4.0 scope where applicable. The SVG logos retain their separate upstream credits and terms. AI assistance (Codex) was used for review fixes and integration.
 
 [Build instructions](frontend-build/README.md) explain how to rebuild the frontend. Run `python3 tools/check-rgds.py`, `python3 tools/test-auto-update.py`, and `python3 tools/test-package-release.py` before changes ship. Runtime libraries, ROMs, BIOS, game media, credentials, and device settings are excluded from Git and releases. Matching frontend sources and license notices accompany installable releases.
 

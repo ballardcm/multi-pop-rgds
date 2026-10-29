@@ -20,7 +20,9 @@ def main():
     downloads = output / 'downloads'
     downloads.mkdir(exist_ok=True)
     names = ['multi-pop-rgds-rocknix-' + config['firmware_version'] + '.zip', 'multi-pop-rgds-source.zip']
-    subprocess.run(['gh', 'release', 'download', config['release_tag'], '--repo', 'ballardcm/multi-pop-rgds',
+    # The pinned inputs stay on this repository's old releases until a release_repo field moves them elsewhere.
+    repo = config.get('release_repo', 'ballardcm/multi-pop-rgds')
+    subprocess.run(['gh', 'release', 'download', config['release_tag'], '--repo', repo,
                     '--dir', str(downloads), '--skip-existing', '--pattern', names[0], '--pattern', names[1]], check=True)
     members = [
         (names[0], 'multi-pop-rgds/frontend/emulationstation', 'emulationstation-aarch64', 'frontend'),

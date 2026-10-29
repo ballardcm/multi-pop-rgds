@@ -27,7 +27,12 @@ import xml.etree.ElementTree as ET
 import zipfile
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-TAG = re.compile(r'(?:build-[0-9a-f]{12}|v[0-9]+\.[0-9]+\.[0-9]+)')
+# Releases now come from the multi-pop monorepo, which also publishes Thor and frontend-input releases, so only
+# an RG DS theme tag (rgds-MM.DD.YY.N) is ever considered.
+TAG = re.compile(r'rgds-(\d{2})\.(\d{2})\.(\d{2})\.(\d{1,3})')
+ARCHIVE = re.compile(r'multi-pop-rgds-rocknix-[^/]+\.zip')
+# A run of unrelated releases can push the newest RG DS one off the first page; a few pages bound the search.
+RELEASE_PAGES = 3
 # A new version that has not reached a running frontend after this many further starts is rolled back.
 FAILED_STARTS_BEFORE_ROLLBACK = 2
 
@@ -36,7 +41,7 @@ FAILED_STARTS_BEFORE_ROLLBACK = 2
 class Config:
     theme: Path = Path('/roms/themes/multi-pop-rgds')
     state: Path = Path('/storage/.config/multi-pop-rgds')
-    release_api: str = 'https://api.github.com/repos/ballardcm/multi-pop-rgds/releases/latest'
+    release_api: str = 'https://api.github.com/repos/ballardcm/multi-pop/releases?per_page=30'
     frontend_api: str = 'http://127.0.0.1:1234'
     verify_process: bool = True
     check_interval: float = 6 * 3600
@@ -256,15 +261,48 @@ def download(url, destination):
         shutil.copyfileobj(source, target)
 
 
+def next_page(config, response):
+    # GitHub pages a release list with a Link header; only a page on the same host as the release API is followed.
+    for part in (response.headers.get('Link') or '').split(','):
+        match = re.fullmatch(r'\s*<([^>]+)>\s*;\s*rel="?next"?\s*', part)
+        if match:
+            url = urllib.parse.urljoin(config.release_api, match.group(1))
+            here, there = urllib.parse.urlsplit(config.release_api), urllib.parse.urlsplit(url)
+            return url if (here.scheme, here.netloc) == (there.scheme, there.netloc) else None
+    return None
+
+
 def latest_release(config):
-    request = urllib.request.Request(config.release_api, headers={'User-Agent': 'MultiPopRGDS-updater', 'Accept': 'application/vnd.github+json'})
-    with urllib.request.urlopen(request, timeout=20) as response:
-        release = json.load(response)
-    tag = release.get('tag_name', '')
-    if not TAG.fullmatch(tag):
-        raise RuntimeError('The latest release does not have a Multi Pop build tag.')
-    assets = {asset['name']: asset['browser_download_url'] for asset in release.get('assets', [])}
-    return tag, assets
+    """Return the tag and assets of the newest published RG DS release, or None when there is none."""
+    url = config.release_api
+    best = None
+    for _ in range(RELEASE_PAGES):
+        request = urllib.request.Request(url, headers={'User-Agent': 'MultiPopRGDS-updater', 'Accept': 'application/vnd.github+json'})
+        with urllib.request.urlopen(request, timeout=20) as response:
+            releases = json.load(response)
+            url = next_page(config, response)
+        # The relay and an update-source override may serve a single release rather than a list.
+        if isinstance(releases, dict):
+            releases = [releases]
+        if not isinstance(releases, list):
+            raise RuntimeError('The release list is not in the expected form.')
+        for release in releases:
+            if not isinstance(release, dict) or release.get('draft') or release.get('prerelease'):
+                continue
+            match = TAG.fullmatch(str(release.get('tag_name', '')))
+            if not match:
+                continue
+            assets = {asset.get('name'): asset.get('browser_download_url') for asset in release.get('assets', []) if isinstance(asset, dict)}
+            if 'SHA256SUMS' not in assets or not any(name and ARCHIVE.fullmatch(name) for name in assets):
+                continue
+            # The tag's own date and revision decide which is newest, since the API lists by creation time.
+            mm, dd, yy, revision = (int(group) for group in match.groups())
+            key = (yy, mm, dd, revision)
+            if best is None or key > best[0]:
+                best = (key, release['tag_name'], assets)
+        if best is not None or url is None:
+            break
+    return None if best is None else best[1:]
 
 
 def installed_matches(config, manifest):
@@ -281,7 +319,12 @@ def stage_latest(config, manual=False):
         return
     config.updates.mkdir(parents=True, exist_ok=True)
     marker.touch()
-    tag, assets = latest_release(config)
+    latest = latest_release(config)
+    if latest is None:
+        # Before the first monorepo release there is nothing to install, which is being up to date rather than a failure.
+        log(config, 'No RG DS release is published yet.')
+        return
+    tag, assets = latest
     known = {(read_json(config.updates / name, {}) or {}).get('tag') for name in ('installed.json', 'staged.json', 'pending.json')}
     if tag in known or tag in read_json(config.updates / 'rejected.json', []):
         return

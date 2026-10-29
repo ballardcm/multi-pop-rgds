@@ -12,8 +12,8 @@ class DateReleaseTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
 
-    def version(self, day='2026-10-21', revision=1):
-        (self.root / 'release-version.json').write_text(json.dumps({'schema_version': 1, 'date': day, 'revision': revision}))
+    def version(self, day='2026-10-21', revision=1, **extra):
+        (self.root / 'release-version.json').write_text(json.dumps({'schema_version': 1, 'date': day, 'revision': revision, **extra}))
         return read_release(self.root)
 
     def test_public_label_and_legacy_upgrade_order(self):
@@ -33,6 +33,19 @@ class DateReleaseTests(unittest.TestCase):
             with self.subTest(day=day, revision=revision):
                 with self.assertRaises(ValueError):
                     self.version(day, revision)
+
+    def test_label_names_the_release_but_revision_orders_it(self):
+        sequence, label = self.version('2026-10-28', 1, label='Transition')
+        self.assertEqual(label, '10.28.26.Transition')
+        self.assertEqual(sequence, 20261028001)
+        self.assertGreater(sequence, self.version('2026-10-27', 1)[0])
+        self.assertLess(sequence, self.version('2026-10-28', 2)[0])
+
+    def test_invalid_labels(self):
+        for label in ('', 'Transition 1', 'v2', 'Über', 7, False):
+            with self.subTest(label=label):
+                with self.assertRaises(ValueError):
+                    self.version(label=label)
 
     def test_missing_config_keeps_legacy_packaging_available(self):
         self.assertIsNone(read_release(self.root))

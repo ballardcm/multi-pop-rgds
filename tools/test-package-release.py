@@ -136,6 +136,14 @@ class ReleaseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'configured date release'):
             release.package(self.root, self.root / 'dist', self.binary, self.upstream, self.sdl, 302)
 
+    def test_labelled_release_shows_the_label_and_orders_by_revision(self):
+        (self.root / 'release-version.json').write_text(json.dumps({'schema_version': 1, 'date': '2026-10-28', 'revision': 1, 'label': 'Transition'}))
+        subprocess.run(['git', 'add', '.'], cwd=self.root, check=True)
+        ready, _, _ = release.package(self.root, self.root / 'dist', self.binary, self.upstream, self.sdl, 20261028001)
+        with zipfile.ZipFile(ready) as archive:
+            self.assertEqual(json.loads(archive.read('multi-pop-rgds/version.json')), {'version': 20261028001, 'display_version': '10.28.26.Transition'})
+            self.assertIn(b'<multiPopVersion>10.28.26.Transition</multiPopVersion>', archive.read('multi-pop-rgds/version.xml'))
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

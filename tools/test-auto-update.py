@@ -18,7 +18,7 @@ auto_update = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(auto_update)
 
 FIRMWARE = 'firmware-a'
-TAG = 'build-0123456789ab'
+TAG = 'rgds-10.29.26.1'
 
 
 def theme_files(version, firmware=FIRMWARE, number=None):
@@ -48,6 +48,7 @@ class Server(http.server.ThreadingHTTPServer):
         self.routes = {}
         self.requests = []
         self.notifications = []
+        self.extra_headers = {}
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -59,6 +60,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             return
         self.send_response(200)
+        for name, value in self.server.extra_headers.get(self.path, {}).items():
+            self.send_header(name, value)
         self.end_headers()
         self.wfile.write(body)
 
@@ -101,18 +104,35 @@ class AutoUpdateTests(unittest.TestCase):
             settings += '\t<string name="subset.autoupdate" value="' + value + '" />\n'
         self.config.es_settings.write_text(settings + '</config>\n')
 
-    def publish(self, files, tag=TAG, sums_override=None):
+    def entry(self, tag, path='', name='multi-pop-rgds-rocknix-20261001.zip', **flags):
+        base = 'http://127.0.0.1:%d' % self.server.server_address[1]
+        return {'tag_name': tag, 'draft': False, 'prerelease': False, **flags, 'assets': [
+            {'name': name, 'browser_download_url': base + '/zip' + path},
+            {'name': 'SHA256SUMS', 'browser_download_url': base + '/sums' + path}]}
+
+    def publish(self, files, tag=TAG, sums_override=None, others=(), single=False):
+        # The monorepo lists every system's releases together, so the real one is served among unrelated entries.
         archive = archive_bytes(files)
         name = 'multi-pop-rgds-rocknix-20261001.zip'
         digest = sums_override or hashlib.sha256(archive).hexdigest()
-        base = 'http://127.0.0.1:%d' % self.server.server_address[1]
+        release = self.entry(tag)
         self.server.routes.update({
-            '/release': json.dumps({'tag_name': tag, 'assets': [
-                {'name': name, 'browser_download_url': base + '/zip'},
-                {'name': 'SHA256SUMS', 'browser_download_url': base + '/sums'}]}).encode(),
+            '/release': json.dumps(release if single else list(others) + [release]).encode(),
             '/zip': archive,
             '/sums': (digest + '  ' + name + '\n').encode(),
         })
+
+    def decoys(self):
+        # Each would be chosen if the filter let it through, and none of its downloads exist.
+        return [
+            self.entry('thor-12.31.26.9', '/thor', 'multi-pop-thor-rocknix-20261001.zip'),
+            self.entry('rgds-frontend-12.31.26.1', '/frontend'),
+            self.entry('rgds-12.31.26.1', '/prerelease', prerelease=True),
+            self.entry('rgds-12.31.26.2', '/draft', draft=True),
+            dict(self.entry('rgds-12.31.26.3', '/nosums'), assets=self.entry('rgds-12.31.26.3', '/nosums')['assets'][:1]),
+            self.entry('build-0123456789ab', '/legacy'),
+            self.entry('v0.3.3', '/semantic'),
+        ]
 
     def installed_theme(self):
         return (self.config.theme / 'theme.xml').read_text()
@@ -180,7 +200,7 @@ class AutoUpdateTests(unittest.TestCase):
     def test_older_or_equal_release_is_never_staged(self):
         for number in (1, 0):
             with self.subTest(number=number):
-                tag = 'build-%012d' % number
+                tag = 'rgds-01.01.26.%d' % number
                 self.publish(theme_files('older', number=number), tag=tag)
                 (self.config.updates / 'last-check').unlink(missing_ok=True)
                 auto_update.background(self.config)
@@ -228,10 +248,64 @@ class AutoUpdateTests(unittest.TestCase):
         self.assertIsNone(self.updates('staged.json'))
         self.assertFalse((self.config.updates / 'staged.zip').exists())
 
-    def test_semantic_release_tag(self):
-        self.publish(theme_files('new'), tag='v0.3.1')
+    def test_other_systems_prereleases_drafts_and_old_tags_are_ignored(self):
+        self.publish(theme_files('new'), others=self.decoys())
         auto_update.background(self.config)
-        self.assertEqual(self.updates('staged.json')['tag'], 'v0.3.1')
+        self.assertEqual(self.updates('staged.json')['tag'], TAG)
+        self.assertFalse([path for path in self.server.requests if path.startswith(('/zip/', '/sums/'))])
+
+    def test_newest_release_wins_regardless_of_order(self):
+        older = [self.entry('rgds-10.29.25.9', '/a'), self.entry('rgds-09.30.26.5', '/b'), self.entry('rgds-10.29.26.0', '/c')]
+        for others in (older, older[::-1]):
+            with self.subTest(order=[entry['tag_name'] for entry in others]):
+                self.publish(theme_files('new'), others=others)
+                (self.config.updates / 'last-check').unlink(missing_ok=True)
+                auto_update.background(self.config)
+                self.assertEqual(self.updates('staged.json')['tag'], TAG)
+                auto_update.discard_staged(self.config)
+
+    def test_empty_list_is_up_to_date(self):
+        for listing in ([], self.decoys()):
+            with self.subTest(entries=len(listing)):
+                self.server.routes['/release'] = json.dumps(listing).encode()
+                auto_update.check(self.config)
+                self.assertEqual(self.server.notifications[-1], 'Multi Pop is up to date (version 1).')
+                self.assertIsNone(self.updates('staged.json'))
+
+    def test_single_release_object_is_accepted(self):
+        self.publish(theme_files('new'), single=True)
+        auto_update.background(self.config)
+        self.assertEqual(self.updates('staged.json')['tag'], TAG)
+
+    def test_missing_repository_is_logged_and_startup_continues(self):
+        del self.server.routes['/release']
+        auto_update.background(self.config)
+        self.assertIsNone(self.updates('staged.json'))
+        self.assertIn('Update check failed: HTTP Error 404', (self.config.updates / 'auto-update.log').read_text())
+
+    def test_next_page_is_followed_only_when_nothing_matched(self):
+        base = 'http://127.0.0.1:%d' % self.server.server_address[1]
+        self.publish(theme_files('new'))
+        self.server.routes['/page2'] = self.server.routes['/release']
+        self.server.routes['/release'] = json.dumps(self.decoys()).encode()
+        self.server.extra_headers = {'/release': {'Link': '<' + base + '/page2>; rel="next", <' + base + '/page9>; rel="last"'}}
+        auto_update.background(self.config)
+        self.assertEqual(self.updates('staged.json')['tag'], TAG)
+        # A matching first page ends the search there.
+        self.server.routes['/release'] = self.server.routes['/page2']
+        (self.config.updates / 'last-check').unlink()
+        auto_update.discard_staged(self.config)
+        requests = self.server.requests.count('/page2')
+        auto_update.background(self.config)
+        self.assertEqual(self.server.requests.count('/page2'), requests)
+
+    def test_pages_are_bounded(self):
+        base = 'http://127.0.0.1:%d' % self.server.server_address[1]
+        self.server.routes['/release'] = b'[]'
+        self.server.extra_headers = {'/release': {'Link': '<' + base + '/release>; rel="next"'}}
+        auto_update.check(self.config)
+        self.assertEqual(self.server.requests.count('/release'), auto_update.RELEASE_PAGES)
+        self.assertIn('up to date', self.server.notifications[-1])
 
     def test_legacy302_accepts_date_release_and_confirms_label(self):
         (self.config.theme / 'version.json').write_text(json.dumps({'version': 302, 'display_version': '0.3.2'}))
@@ -244,7 +318,7 @@ class AutoUpdateTests(unittest.TestCase):
         auto_update.confirm(self.config)
         self.assertEqual(self.updates('installed.json')['version'], 20261021001)
         self.assertEqual(self.server.notifications[-1], 'Multi Pop updated to version 10.21.26.1.')
-        self.publish(theme_files('old', number=302), tag='v0.3.2')
+        self.publish(theme_files('old', number=302), tag='rgds-10.30.26.1')
         auto_update.check(self.config)
         self.assertIsNone(self.updates('staged.json'))
 

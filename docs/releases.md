@@ -1,5 +1,8 @@
 # Release maintenance and update testing
 
+> [!IMPORTANT]
+> **No further releases may be published from this repository after the transition release (10.28.26.Transition).** Multi Pop RG DS is now developed and released from [ballardcm/multi-pop](https://github.com/ballardcm/multi-pop) under `systems/rgds`, and this repository will be deleted on 2026-11-27. A later `build-` release here would reach only devices that have not yet installed the transition, and would strand them on a repository that is going away.
+
 A release has an installable `multi-pop-rgds-rocknix-20261001.zip`, a matching `multi-pop-rgds-source.zip`, and `SHA256SUMS`. The source download contains the tracked project files, pinned upstream frontend sources, SDL headers source, and pugixml source. Firmware libraries, credentials, user data and compiler caches are excluded. Install manifests hash every shipped theme file. The packager rejects unverified binaries, changed build inputs, substituted source archives, symlinks and embedded service-key literals.
 
 ## Build and package
@@ -39,6 +42,16 @@ The workflow recovers the verified frontend and source inputs from the pinned 0.
 
 For local packaging, run `python3 tools/fetch-release-inputs.py` first. Downloads stay under ignored `.local/release-inputs`; each extracted input is checked against `frontend-build/release.json`. Use those paths with the packaging command above. Keep the release date and daily revision coordinated with Thor; do not reuse a published label.
 
+## Transition to the monorepo
+
+The transition release is labelled **10.28.26.Transition** through the optional `label` field in `release-version.json`. The label replaces the revision only in the displayed version; the updater still orders it by date and revision, as 20261028001, which is newer than 10.27.26.1 (20261027001). It keeps the `build-<commit>` tag, the firmware revision and the three startup helpers (`start_es_rgds.sh`, `start_after_reboot.sh`, `multi_pop_rgds_common.sh`) byte-identical to 10.27.26.1, because the installed updater refuses a release that changes any of them.
+
+Its one functional change is where the updater looks. It reads the release list of `ballardcm/multi-pop`, skips drafts and prereleases, keeps only `rgds-MM.DD.YY.N` tags that carry `SHA256SUMS` and the installable ZIP, and picks the newest by the date and revision in the tag rather than by the order the API returns. Thor, `rgds-frontend-` and the old `build-` and `v` tags are ignored. If the first page has no match, up to two more pages are read. An empty result is reported as up to date; an unreachable or missing repository is logged as a failed check and the installed theme keeps running.
+
+Monorepo RG DS releases must therefore keep an integer `version` above 20261028001, the same firmware revision and the same three startup helpers, or they will be skipped or refused just as before.
+
+`tools/fetch-release-inputs.py` still recovers the pinned frontend inputs from this repository's 0.3.2 release; set `release_repo` in `frontend-build/release.json` to fetch them from another repository once they are republished there.
+
 ## Migration from 0.3.2
 
 The installed 0.3.2 updater already accepts build-commit tags and separate display labels. The first date-based package therefore upgrades normally without a bridge updater or changes to the startup helpers. Its integer ordering value is greater than 302, while the user sees **10.21.26.1**.
@@ -61,6 +74,8 @@ On the computer with this source checkout and `gh auth login` completed:
 python3 tools/release-relay.py
 ```
 
+The relay reads `ballardcm/multi-pop` and serves only its RG DS releases. To try a release before it is public, add `--prerelease` to include prereleases, or `--tag rgds-MM.DD.YY.N` to serve that one release even as a draft; the relay clears the prerelease and draft flags so the device will install it. `--repo` relays another repository, which with `--tag` serves a `build-` release of this one to a device that has not yet installed the transition.
+
 In another computer terminal, keep this SSH tunnel running (replace the destination):
 
 ```sh
@@ -71,11 +86,11 @@ On the RG DS:
 
 ```sh
 mkdir -p /storage/.config/multi-pop-rgds
-printf '%s\n' '{"release_api":"http://127.0.0.1:18765/release"}' \
+printf '%s\n' '{"release_api":"http://127.0.0.1:18765/releases"}' \
   > /storage/.config/multi-pop-rgds/update-source.json
 ```
 
-The relay serves only this repository's latest release and its approved install assets. Keep both the computer relay and SSH tunnel alive during checks/downloads. For the normal public Internet path, delete the override:
+The relay serves only the selected RG DS releases and their approved install assets. `/release` serves the newest one alone, which is what updaters before the transition expect. Keep both the computer relay and SSH tunnel alive during checks/downloads. For the normal public Internet path, delete the override:
 
 ```sh
 rm -f /storage/.config/multi-pop-rgds/update-source.json
